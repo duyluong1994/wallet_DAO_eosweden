@@ -188,16 +188,6 @@
 	}
 
 	input,
-	textarea {
-		width: 100%;
-		margin: 8px 0;
-		display: inline-block;
-		border: 1px solid #ccc;
-		border-radius: 4px;
-		box-sizing: border-box;
-		font-size: 16px;
-	}
-
 	button {
 		width: 100%;
 		padding: 14px 20px;

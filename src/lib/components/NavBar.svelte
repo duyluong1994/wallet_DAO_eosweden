@@ -13,13 +13,7 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div
-	on:click={() => (isOpen = false)}
-	class:fixed={isOpen}
-	class:inset-0={isOpen}
-	class:pt-1={isOpen}
-	class="md:relative"
->
+<div class="relative">
 	<nav class="text-default mr-5 py-2">
 		<div class="flex items-center justify-between">
 			<button class="ml-5 md:hidden" on:click|stopPropagation={() => (isOpen = !isOpen)}>
@@ -29,14 +23,21 @@
 			{#if isOpen}
 				<!-- Mobile Menu -->
 				<div
-					in:slide={{ axis: 'x', delay: 0, duration: 250 }}
-					out:slide={{ axis: 'x', delay: 0, duration: 250 }}
-					class={isOpen
-						? 'fixed bottom-0 left-0 top-12 w-48 border-r border-gray-600 bg-background-default shadow-lg  md:hidden'
-						: 'hidden'}
-					on:click|stopPropagation={() => {}}
+					on:click={() => (isOpen = false)}
+					class:fixed={isOpen}
+					class:inset-0={isOpen}
+					class:bg-black={isOpen}
+					class:bg-opacity-50={isOpen}
 				>
-					<ul class="m-0 list-none divide-y divide-dashed p-0">
+					<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+					<ul
+						on:click|stopPropagation={() => {}}
+						in:slide={{ axis: 'x', delay: 0, duration: 350 }}
+						out:slide={{ axis: 'x', delay: 0, duration: 450 }}
+						class={isOpen
+							? 'fixed bottom-0 left-0 top-[58px] m-0 h-full w-48 list-none divide-y divide-dashed border-r border-gray-600 bg-background-default p-0 shadow-lg  md:hidden'
+							: 'hidden'}
+					>
 						{#each ROUTES as route}
 							<li class="block">
 								{#if route.group}

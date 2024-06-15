@@ -2,6 +2,7 @@
 	import StakeModal from '$lib/components/Modal/StakeModal.svelte';
 	import StakeTimeModal from '$lib/components/Modal/StakeTimeModal.svelte';
 	import WalletAction from '$lib/components/SidePanel/Actions/WalletAction.svelte';
+	import CandidateMenu from '$lib/components/SidePanel/MiniMenu/CandidateMenu.svelte';
 	import { get_balances, get_member_info } from '$lib/services/awStakingService';
 	import { session } from '$lib/stores';
 	import { Asset } from '@wharfkit/antelope';
@@ -123,7 +124,9 @@
 		</div>
 	</div>
 </div>
-<div class="left-side md:flex"></div>
+<div class="left-side md:flex">
+	<CandidateMenu />
+</div>
 <div class="right-side md:flex">
 	{#if !loading && $session}
 		<WalletAction
