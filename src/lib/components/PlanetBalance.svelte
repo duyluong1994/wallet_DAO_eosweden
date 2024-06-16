@@ -20,7 +20,7 @@
 	{#if $page.url.pathname !== '/wallet'}
 		<!-- display planet balance with logo, name, balance -->
 		<div class="flex items-center text-xl text-white">
-			<img src={`/images/planets/${$activePlanetStore.scope}.png`} alt="planet" class="h-10 w-10" />
+			<img src={`/images/planets/${$activePlanetStore.scope}.png`} alt="planet" class="h-9 w-9" />
 			<div class="ml-1 hidden font-bold md:flex">{$activePlanetStore.name}:</div>
 			<div class="ml-1">
 				{numeral(planet_balance).format('0,0.0000')}
