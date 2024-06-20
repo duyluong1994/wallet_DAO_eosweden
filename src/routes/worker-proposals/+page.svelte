@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { PUBLIC_PINATA_GATEWAY, PUBLIC_PINATA_GATEWAY_KEY } from '$env/static/public';
 	import PlanetMenu from '$lib/components/Menu/PlanetMenu.svelte';
 	import CreateWorkerProposalModal from '$lib/components/Modal/CreateWorkerProposalModal.svelte';
 	import WPDelegateVoteModal from '$lib/components/Modal/WPDelegateVoteModal.svelte';
@@ -452,22 +453,27 @@
 										<div class="mt-1 text-sm md:text-base">
 											Proposer Pay: <span class="text-white">{proposal.proposal_pay.quantity}</span>
 										</div>
-										<div class="mt-1 text-sm md:text-base">
+										<!-- <div class="mt-1 text-sm md:text-base">
 											Document: <a
 												class="text-blue-400 underline"
 												target="_blank"
 												href={`https://sapphire-written-octopus-904.mypinata.cloud/ipfs/${proposal.content_hash}/?pinataGatewayToken=wDMKqd4HX-0QgnjRJ2CUALFi8Tza0pwZqCZAMX1o8Qdu-kfGLCLTILIvM3yE5Nhp`}
 												>Get File</a
 											>
-										</div>
-										<!-- <div class="mt-1 text-sm md:text-base">
-											Document: <a
-												class="text-blue-400 underline"
-												target="_blank"
-												href={`${PUBLIC_PINATA_GATEWAY}/ipfs/${proposal.content_hash}/?pinataGatewayToken=${PUBLIC_PINATA_GATEWAY_KEY}`}
-												>Get File</a
-											>
 										</div> -->
+										<div class="mt-1 text-sm md:text-base">
+											Document:
+											{#if proposal.content_hash}
+												<a
+													class="text-blue-400 underline"
+													target="_blank"
+													href={`${PUBLIC_PINATA_GATEWAY}/ipfs/${proposal.content_hash}/?pinataGatewayToken=${PUBLIC_PINATA_GATEWAY_KEY}`}
+													>Get File</a
+												>
+											{:else}
+												<span class="text-white">No Document</span>
+											{/if}
+										</div>
 									</div>
 									<div class="mb-3 flex basis-full flex-col md:mb-0 md:basis-3/12">
 										<div class="text-sm md:text-base">
