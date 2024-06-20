@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { AW_DAO, TOAST_TYPES } from '$lib/constants';
-	import { activePlanetStore, session, toastStore } from '$lib/stores';
+	import { session, toastStore } from '$lib/stores';
 	import { pushActions } from '$lib/utils/wharfkit/session';
 	import { Spinner } from 'flowbite-svelte';
 	import CloseOutline from 'flowbite-svelte-icons/CloseOutline.svelte';
@@ -17,7 +17,6 @@
 	let isEditRequestedPay = false;
 
 	export function setModalOpen(bool: boolean, data: any) {
-		console.log('modal data:', data);
 		profile = data;
 		if (profile.is_registered) {
 			name = profile.cand_acc;
@@ -77,7 +76,7 @@
 				],
 				data: {
 					cand: String($session.actor),
-					dac_id: $activePlanetStore.scope,
+					dac_id: profile.planet.scope,
 					profile: JSON.stringify({
 						givenName: name,
 						image,
@@ -99,7 +98,7 @@
 				],
 				data: {
 					cand: String($session.actor),
-					dac_id: $activePlanetStore.scope,
+					dac_id: profile.planet.scope,
 					requestedpay: `${requestedpay.toFixed(4)} TLM`
 				}
 			});
@@ -162,7 +161,7 @@
 					on:change={() => (isEditRequestedPay = true)}
 				/>
 				<span
-					class="my-2 ml-1 flex items-center justify-center rounded-lg bg-gray-600 px-2 text-white"
+					class="my-2 ml-1 flex items-center justify-center rounded-lg bg-gray-600 px-3 text-white"
 				>
 					TLM
 				</span>

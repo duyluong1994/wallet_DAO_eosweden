@@ -133,6 +133,7 @@ const AW_DAO = {
         CLAIM_BUDGET: "claimbudget",
         ST_PROFILE: "stprofile",
         NOMINATE_CANDIDATE: "nominatecane",
+        WITHDRAW_CANDIDATE: "withdrawcane",
     },
 };
 
