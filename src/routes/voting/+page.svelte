@@ -60,7 +60,7 @@
 		let response = await get_candidates($activePlanetStore.name);
 		if (!response) return;
 		let api_response: any = await axios.get(
-			`https://api.alienw.com/custodians/${$activePlanetStore.scope}`
+			`https://api.alienw.com/custodians?planet=${$activePlanetStore.scope}`
 		);
 		const { data } = api_response;
 

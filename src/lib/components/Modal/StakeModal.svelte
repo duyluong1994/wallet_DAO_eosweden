@@ -111,12 +111,10 @@
 					{title}
 				</h2>
 				<div class="flex-grow"></div>
-				<CloseOutline
-					class="text-red-500 hover:cursor-pointer"
-					size="lg"
-					strokeWidth="3"
-					on:click={close}
-				/>
+				<!-- svelte-ignore a11y-missing-attribute -->
+				<a on:click={close}>
+					<CloseOutline class="text-red-500 hover:cursor-pointer" size="lg" strokeWidth="3" />
+				</a>
 			</div>
 			<div class="flex flex-row place-content-between">
 				<label for="title" class="text-base font-semibold"> Quantity: </label>

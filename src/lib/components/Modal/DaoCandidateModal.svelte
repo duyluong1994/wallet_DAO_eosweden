@@ -17,17 +17,7 @@
 	let author = '';
 
 	export function setModalOpen(bool: boolean, data: any) {
-		let { article } = data;
-		if (article) {
-			isCreating = false;
-			title = article.title;
-			image = article.image;
-			link = article.link;
-			author = article.author;
-			description = article.description;
-		} else {
-			isCreating = true;
-		}
+		console.log('modal data:', data);
 		isOpen = bool;
 	}
 

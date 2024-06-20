@@ -20,6 +20,7 @@
 		"@svelte-plugins/tooltips": "^3.0.0",
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/adapter-static": "^3.0.1",
+		"@sveltejs/enhanced-img": "^0.3.0",
 		"@sveltejs/kit": "^2.4.3",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@tailwindcss/forms": "^0.5.3",
@@ -43,6 +44,7 @@
 		"prettier-plugin-svelte": "^3.1.2",
 		"prettier-plugin-tailwindcss": "^0.5.11",
 		"svelte": "^4.2.7",
+		"svelte-ant-design-icons": "^1.1.2",
 		"svelte-awesome-icons": "^1.2.1",
 		"svelte-check": "^3.6.0",
 		"tailwindcss": "^3.4.1",
@@ -52,6 +54,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"20": "^3.1.9",
 		"@pinata/sdk": "^2.1.0",
 		"@wharfkit/account": "^1.0.1",
 		"@wharfkit/antelope": "^1.0.7",
