@@ -32,7 +32,7 @@ export async function get_candidate_by_candname(planet: any, candidate: string) 
     if (!data) return null;
     const deserializedData = {
         candidate_name: String(data.candidate_name),
-        requestedpay: String(data.requestedpay),
+        requestedpay: data.requestedpay,
         rank: parseInt(data.rank),
         gap_filler: parseInt(data.gap_filler),
         is_active: parseInt(data.is_active),

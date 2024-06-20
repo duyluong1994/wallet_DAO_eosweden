@@ -19,6 +19,7 @@
 	let daoCandidateModal: any;
 	let selectedBalance: any;
 	let tokensRef: any;
+	let daoCandidateRef: any;
 	const menuItems: any = [
 		{ id: 'tokens', icon: CoinsSolid, label: 'Tokens', logMessage: 'Tokens' },
 		{
@@ -37,6 +38,11 @@
 	async function refreshTokens() {
 		if ($session) {
 			tokensRef.refresh();
+		}
+	}
+	async function refreshDaoCandidate() {
+		if ($session) {
+			daoCandidateRef.refresh();
 		}
 	}
 </script>
@@ -61,6 +67,7 @@
 				on:editImgProfile={(data) => {
 					daoCandidateModal.setModalOpen(true, data.detail);
 				}}
+				bind:this={daoCandidateRef}
 			/>
 		{/if}
 		<MiniMenu
@@ -100,7 +107,7 @@
 	<StakeTimeModal bind:this={stakeTimeModal} on:refresh={refreshTokens} />
 {/if}
 {#if selectedMenuId === 'dao-candidate'}
-	<DaoCandidateModal bind:this={daoCandidateModal} />
+	<DaoCandidateModal bind:this={daoCandidateModal} on:refresh={refreshDaoCandidate} />
 {/if}
 
 <style>

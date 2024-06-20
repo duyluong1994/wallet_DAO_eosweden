@@ -2,6 +2,7 @@
 	import { AW_PLANETS } from '$lib/constants';
 	import { get_candidate_by_candname } from '$lib/services/awdaoService';
 	import { session } from '$lib/stores';
+	import { Asset } from '@wharfkit/antelope';
 	import axios from 'axios';
 	import { Spinner } from 'flowbite-svelte';
 	import { afterUpdate, createEventDispatcher, onMount } from 'svelte';
@@ -52,11 +53,12 @@
 			let cData = candidateData.find((c: any) => c.planet.scope === planet.scope);
 			return {
 				planet,
-				cand_acc: pData?.cand_acc || 'No Account',
+				cand_acc: pData?.cand_acc || 'No Profile',
 				cand_name: pData?.cand_name || 'No Given Name',
 				cand_img: pData?.cand_img || 'default-avatar.png',
 				cand_desc: pData?.cand_desc || 'No Description Given',
-				requestedpay: cData?.requestedpay || '0.0000 TLM'
+				requestedpay: cData?.requestedpay || Asset.from('0.0000 TLM'),
+				is_registered: pData ? true : false
 			};
 		});
 		console.log('profiles', profiles);
@@ -125,7 +127,7 @@
 						}}
 					>
 						<EditFilled class="h-6 w-6 rounded-full  md:h-6 md:w-6" />
-						<div class="ml-2">Edit</div>
+						<div class="ml-2">{profile.is_registered ? 'Update' : 'Sign Up'}</div>
 					</button>
 
 					<div class="flex flex-row items-start text-nowrap">
@@ -147,7 +149,7 @@
 							</div>
 							<div class="text-sm md:text-base">
 								<span class="text-white">Requested Pay: </span>
-								<span class="text-default">{profile.requestedpay}</span>
+								<span class="text-default">{String(profile.requestedpay)}</span>
 							</div>
 						</div>
 					</div>
