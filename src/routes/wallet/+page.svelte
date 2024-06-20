@@ -75,7 +75,7 @@
 			{menuItems}
 			on:selectedItem={(data) => {
 				selectedMenuId = data.detail.id;
-				console.log('selected: ', selectedMenuId);
+				// console.log('selected: ', selectedMenuId);
 			}}
 		/>
 	</div>

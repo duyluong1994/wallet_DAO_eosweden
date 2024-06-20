@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { PUBLIC_ALIEN_WALLET_API } from '$env/static/public';
 	import { AW_DAO, AW_PLANETS, TOAST_TYPES } from '$lib/constants';
 	import { get_candidate_by_candname } from '$lib/services/awdaoService';
 	import { session, toastStore } from '$lib/stores';
@@ -66,9 +67,9 @@
 
 	async function fetchCandidatesProfile() {
 		const res: any = await axios.get(
-			`https://api.alienw.com/custodians?account=${String($session?.actor)}`
+			`${PUBLIC_ALIEN_WALLET_API}/custodians?account=${String($session?.actor)}`
 		);
-		// const res: any = await axios.get(`https://api.alienw.com/custodians?account=anyo.cabal`);
+		// const res: any = await axios.get(`${PUBLIC_ALIEN_WALLET_API}/custodians?account=anyo.cabal`);
 		if (!res) return [];
 		return res.data;
 	}
@@ -178,11 +179,21 @@
 
 						<div class="ml-5 w-full">
 							<div class="flex flex-row justify-between">
-								<div class="font-bold text-white">
-									{profile.cand_acc} -
-									<span class="italic">{profile.cand_name}</span>
+								<div>
+									<div class="font-bold text-white">
+										{profile.cand_acc} -
+										<span class="italic">{profile.cand_name}</span>
+									</div>
+									<div class="mt-1 text-sm md:text-base">
+										<span class="text-white">Planet: </span>
+										<span class="text-default"> {profile.planet.name}</span>
+									</div>
+									<div class="text-sm md:text-base">
+										<span class="text-white">Requested Pay: </span>
+										<span class="text-default">{String(profile.requestedpay)}</span>
+									</div>
 								</div>
-								<div class="flex flex-col md:flex-row">
+								<div class="flex h-fit flex-col md:flex-row">
 									<button
 										class=" flex cursor-pointer flex-row justify-center rounded-md bg-green-500 p-1 text-white hover:bg-green-600"
 										on:click={() => {
@@ -206,14 +217,6 @@
 										</button>
 									{/if}
 								</div>
-							</div>
-							<div class="mt-2 text-sm md:text-base">
-								<span class="text-white">Planet: </span>
-								<span class="text-default"> {profile.planet.name}</span>
-							</div>
-							<div class="text-sm md:text-base">
-								<span class="text-white">Requested Pay: </span>
-								<span class="text-default">{String(profile.requestedpay)}</span>
 							</div>
 						</div>
 					</div>

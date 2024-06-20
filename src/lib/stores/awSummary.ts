@@ -1,3 +1,4 @@
+import { PUBLIC_ALIEN_WALLET_API } from '$env/static/public';
 import axios from 'axios';
 import { writable } from 'svelte/store';
 
@@ -9,7 +10,7 @@ function createAwSummaryStore() {
         subscribe,
         set,
         fetch: async () => {
-            const response = await axios.get(`https://api.alienw.com/summary`);
+            const response = await axios.get(`${PUBLIC_ALIEN_WALLET_API}/summary`);
             set(response.data);
         }
     };

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { PUBLIC_ALIEN_WALLET_API } from '$env/static/public';
 	import PlanetMenu from '$lib/components/Menu/PlanetMenu.svelte';
 	import VotedFor from '$lib/components/SidePanel/VotedFor.svelte';
 	import { AW_DAO, TOAST_TYPES } from '$lib/constants';
@@ -60,7 +61,7 @@
 		let response = await get_candidates($activePlanetStore.name);
 		if (!response) return;
 		let api_response: any = await axios.get(
-			`https://api.alienw.com/custodians?planet=${$activePlanetStore.scope}`
+			`${PUBLIC_ALIEN_WALLET_API}/custodians?planet=${$activePlanetStore.scope}`
 		);
 		const { data } = api_response;
 
