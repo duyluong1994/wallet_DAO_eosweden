@@ -111,12 +111,10 @@
 					{title}
 				</h2>
 				<div class="flex-grow"></div>
-				<CloseOutline
-					class="text-red-500 hover:cursor-pointer"
-					size="lg"
-					strokeWidth="3"
-					on:click={close}
-				/>
+				<!-- svelte-ignore a11y-missing-attribute -->
+				<a on:click={close}>
+					<CloseOutline class="text-red-500 hover:cursor-pointer" size="lg" strokeWidth="3" />
+				</a>
 			</div>
 			<div class="flex flex-row place-content-between">
 				<label for="title" class="text-base font-semibold"> Quantity: </label>
@@ -188,16 +186,6 @@
 	}
 
 	input,
-	textarea {
-		width: 100%;
-		margin: 8px 0;
-		display: inline-block;
-		border: 1px solid #ccc;
-		border-radius: 4px;
-		box-sizing: border-box;
-		font-size: 16px;
-	}
-
 	button {
 		width: 100%;
 		padding: 14px 20px;

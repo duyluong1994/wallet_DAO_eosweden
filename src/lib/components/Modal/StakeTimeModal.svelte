@@ -46,7 +46,6 @@
 	];
 
 	export function setModalOpen(bool: boolean, data: any) {
-		console.log('data', data);
 		selectedItem = data.selectedItem;
 		symbolName = data.selectedItem?.balance?.symbol?.name;
 		symbolPrecision = data.selectedItem?.balance?.symbol?.precision;
@@ -112,12 +111,10 @@
 			<div class="mb-2 flex flex-row">
 				<h2 class=" text-white underline decoration-white underline-offset-4">Set Stake Time</h2>
 				<div class="flex-grow"></div>
-				<CloseOutline
-					class="text-red-500 hover:cursor-pointer"
-					size="lg"
-					strokeWidth="3"
-					on:click={close}
-				/>
+				<!-- svelte-ignore a11y-missing-attribute -->
+				<a on:click={close}>
+					<CloseOutline class="text-red-500 hover:cursor-pointer" size="lg" strokeWidth="3" />
+				</a>
 			</div>
 
 			{#each stakeTimePresets as preset}

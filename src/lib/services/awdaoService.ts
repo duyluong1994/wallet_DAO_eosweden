@@ -23,6 +23,26 @@ export async function get_staked_by_user(activePlanet: string, user: string) {
     // const res: any = await getSingleData(AW_TOKEN.CONTRACT_NAME, planetScope, AW_TOKEN.TABLES.STAKES, "um.i2.wam");
     return res;
 }
+export async function get_candidate_by_candname(planet: any, candidate: string) {
+
+    // TODO: comment out this line
+    // candidate = "anyo.cabal";
+
+    const data: any = await getSingleData(AW_DAO.CONTRACT_NAME, planet.scope, AW_DAO.TABLES.CANDIDATES, candidate);
+    if (!data) return null;
+    const deserializedData = {
+        candidate_name: String(data.candidate_name),
+        requestedpay: data.requestedpay,
+        rank: parseInt(data.rank),
+        gap_filler: parseInt(data.gap_filler),
+        is_active: parseInt(data.is_active),
+        number_voters: parseInt(data.number_voters),
+        avg_vote_time_stamp: `${String(data.avg_vote_time_stamp)}Z`,
+        running_weight_time: parseInt(data.running_weight_time),
+        planet
+    }
+    return deserializedData;
+}
 
 export async function get_candidates(activePlanet: string) {
 

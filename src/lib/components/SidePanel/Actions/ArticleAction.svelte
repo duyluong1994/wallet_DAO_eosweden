@@ -51,10 +51,6 @@
 		await pushActions($session, actions);
 		refresh();
 	}
-
-	function toggleActions() {
-		showActions = !showActions;
-	}
 </script>
 
 <Actions bind:showActions>

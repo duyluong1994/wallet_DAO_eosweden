@@ -202,12 +202,9 @@
 					New Worker Proposal
 				</h2>
 				<div class="grow"></div>
-				<CloseOutline
-					class="text-red-500 hover:cursor-pointer"
-					size="lg"
-					strokeWidth="3"
-					on:click={close}
-				/>
+				<div on:click={close}>
+					<CloseOutline class="text-red-500 hover:cursor-pointer" size="lg" strokeWidth="3" />
+				</div>
 			</div>
 			<!-- <div class="flex flex-row gap-5">
 				<input class=" text-black" type="text" bind:value={id} placeholder="ID" />

@@ -13,7 +13,7 @@
 					<h1
 						class="ml-10 hidden bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 bg-clip-text text-xl font-bold text-transparent md:flex"
 					>
-						Alien Wallet
+						Alienw Wallet
 					</h1>
 					<div class="flex items-center md:justify-end">
 						<NavBar />

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { AW_DAO_INFRA, TOAST_TYPES } from '$lib/constants';
-	import { activePlanetStore, session, toastStore } from '$lib/stores';
+	import { AW_DAO, TOAST_TYPES } from '$lib/constants';
+	import { session, toastStore } from '$lib/stores';
 	import { pushActions } from '$lib/utils/wharfkit/session';
 	import { Spinner } from 'flowbite-svelte';
 	import CloseOutline from 'flowbite-svelte-icons/CloseOutline.svelte';
@@ -9,24 +9,20 @@
 	const dispatch = createEventDispatcher();
 	let isOpen = false;
 	let isSubmitting = false;
-	let isCreating = true;
-	let title = '';
+	let profile: any = null;
+	let name = '';
 	let description = '';
 	let image = '';
-	let link = '';
-	let author = '';
+	let requestedpay: any = 0;
+	let isEditRequestedPay = false;
 
 	export function setModalOpen(bool: boolean, data: any) {
-		let { article } = data;
-		if (article) {
-			isCreating = false;
-			title = article.title;
-			image = article.image;
-			link = article.link;
-			author = article.author;
-			description = article.description;
-		} else {
-			isCreating = true;
+		profile = data;
+		if (profile.is_registered) {
+			name = profile.cand_acc;
+			description = profile.cand_desc;
+			image = profile.cand_img;
+			requestedpay = parseFloat(profile.requestedpay.value);
 		}
 		isOpen = bool;
 	}
@@ -40,12 +36,12 @@
 	async function submit() {
 		isSubmitting = true;
 		if (!$session) {
-			toastStore.add('Please login to vote', TOAST_TYPES.WARNING);
+			toastStore.add('Please login first', TOAST_TYPES.WARNING);
 			return;
 		}
 
-		if (!title) {
-			toastStore.add('Title is required', TOAST_TYPES.WARNING);
+		if (!name) {
+			toastStore.add('Name is required', TOAST_TYPES.WARNING);
 			isSubmitting = false;
 			return;
 		}
@@ -56,28 +52,22 @@
 			return;
 		}
 
-		if (!link) {
-			toastStore.add('Article Link is required', TOAST_TYPES.WARNING);
-			isSubmitting = false;
-			return;
-		}
-
-		if (!author) {
-			toastStore.add('Author is required', TOAST_TYPES.WARNING);
-			isSubmitting = false;
-			return;
-		}
-
 		if (!description) {
 			toastStore.add('Description is required', TOAST_TYPES.WARNING);
 			isSubmitting = false;
 			return;
 		}
 
-		let actions = [
+		// if (!requestedpay) {
+		// 	toastStore.add('Requested Pay is required', TOAST_TYPES.WARNING);
+		// 	isSubmitting = false;
+		// 	return;
+		// }
+
+		let actions: any = [
 			{
-				account: AW_DAO_INFRA.CONTRACT_NAME,
-				name: isCreating ? AW_DAO_INFRA.ACTIONS.ADD_ARTICLE : AW_DAO_INFRA.ACTIONS.UPDATE_ARTICLE,
+				account: AW_DAO.CONTRACT_NAME,
+				name: AW_DAO.ACTIONS.ST_PROFILE,
 				authorization: [
 					{
 						actor: String($session.actor),
@@ -85,28 +75,46 @@
 					}
 				],
 				data: {
-					dac_id: $activePlanetStore.scope,
-					executor: String($session.actor),
-					title,
-					image,
-					link,
-					author,
-					description
+					cand: String($session.actor),
+					dac_id: profile.planet.scope,
+					profile: JSON.stringify({
+						givenName: name,
+						image,
+						description
+					})
 				}
 			}
 		];
-		await pushActions($session, actions);
+
+		if (!profile.is_registered || isEditRequestedPay) {
+			actions.push({
+				account: AW_DAO.CONTRACT_NAME,
+				name: AW_DAO.ACTIONS.NOMINATE_CANDIDATE,
+				authorization: [
+					{
+						actor: String($session.actor),
+						permission: String($session?.permission)
+					}
+				],
+				data: {
+					cand: String($session.actor),
+					dac_id: profile.planet.scope,
+					requestedpay: `${requestedpay.toFixed(4)} TLM`
+				}
+			});
+		}
+		const res = await pushActions($session, actions);
 		isSubmitting = false;
-		refresh();
+		if (res) {
+			refresh();
+		}
 		close();
 	}
 
 	async function close() {
-		title = '';
+		name = '';
 		description = '';
 		image = '';
-		link = '';
-		author = '';
 		isOpen = false;
 	}
 	function autoResize(event: any) {
@@ -126,35 +134,39 @@
 		<div class="modal-content bg-background-default-lighter" on:click|stopPropagation>
 			<div class="mb-5 flex flex-row">
 				<h2 class=" text-white underline decoration-white underline-offset-4">
-					{#if isCreating}
-						Create Identity
-					{:else}
-						Update Identity
-					{/if}
+					{profile.planet.name} - Candidate Profile
 				</h2>
 				<div class="flex-grow"></div>
-				<div on:click={close}>
-					<CloseOutline class="text-red-500 hover:cursor-pointer" size="lg" strokeWidth="3" />
+				<div on:click={close} class="hover:cursor-pointer">
+					<CloseOutline class="  text-red-500 " size="lg" strokeWidth="3" />
 				</div>
 			</div>
-			<label for="title" class="text-base font-semibold"> Title: </label>
+			<label for="name" class="text-base font-semibold"> Name: </label>
 			<div class="flex flex-row">
-				<input id="title" class="text-black" type="text" bind:value={title} placeholder="Title" />
+				<input id="name" class="text-black" type="text" bind:value={name} placeholder="Name" />
 				<span
 					class="my-2 ml-1 flex items-center justify-center rounded-lg bg-gray-600 px-2 text-white"
 				>
 					String
 				</span>
 			</div>
-			<label for="author" class="text-base font-semibold"> Author: </label>
+
+			<label for="name" class="text-base font-semibold"> Requested Pay: </label>
 			<div class="flex flex-row">
-				<input class="text-black" type="text" bind:value={author} placeholder="Author" />
+				<input
+					class="text-black"
+					type="number"
+					bind:value={requestedpay}
+					placeholder="Requested Pay"
+					on:change={() => (isEditRequestedPay = true)}
+				/>
 				<span
-					class="my-2 ml-1 flex items-center justify-center rounded-lg bg-gray-600 px-2 text-white"
+					class="my-2 ml-1 flex items-center justify-center rounded-lg bg-gray-600 px-3 text-white"
 				>
-					String
+					TLM
 				</span>
 			</div>
+
 			<label for="image" class="text-base font-semibold"> Image URL: </label>
 			<div class="flex flex-row">
 				<input
@@ -170,16 +182,7 @@
 					String
 				</span>
 			</div>
-			<label for="link" class="text-base font-semibold"> Link: </label>
-			<div class="flex flex-row">
-				<input class="text-black" type="text" bind:value={link} placeholder="Link" />
-				<span
-					class="my-2 ml-1 flex items-center justify-center rounded-lg bg-gray-600 px-2 text-white"
-				>
-					String
-				</span>
-			</div>
-
+			<label for="image" class="text-base font-semibold"> Description: </label>
 			<div class="flex flex-row">
 				<textarea
 					class="text-black"
