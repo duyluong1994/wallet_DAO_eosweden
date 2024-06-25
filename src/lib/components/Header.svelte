@@ -21,7 +21,7 @@
 				</div>
 			</div>
 			<div class="mt-1 flex flex-row items-center justify-between md:flex-row">
-				<PlanetBalance class="my-1 md:ml-5" />
+				<PlanetBalance class="my-1  md:ml-5" />
 				<div class="mr-5 flex items-center">
 					<Login />
 					<EndpointCfg />

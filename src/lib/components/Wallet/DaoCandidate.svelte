@@ -66,10 +66,10 @@
 	}
 
 	async function fetchCandidatesProfile() {
-		const res: any = await axios.get(
-			`${PUBLIC_ALIEN_WALLET_API}/custodians?account=${String($session?.actor)}`
-		);
-		// const res: any = await axios.get(`${PUBLIC_ALIEN_WALLET_API}/custodians?account=anyo.cabal`);
+		// const res: any = await axios.get(
+		// 	`${PUBLIC_ALIEN_WALLET_API}/custodians?account=${String($session?.actor)}`
+		// );
+		const res: any = await axios.get(`${PUBLIC_ALIEN_WALLET_API}/custodians?account=anyo.cabal`);
 		if (!res) return [];
 		return res.data;
 	}
@@ -173,9 +173,9 @@
 					</div>
 
 					<div class="flex w-full flex-row items-start text-nowrap">
-						<img
+						<enhanced:img
 							class="h-16 min-h-16 w-16 min-w-16 rounded-full md:h-24 md:min-h-24 md:w-24 md:min-w-24"
-							src={profile.cand_img}
+							src={profile?.cand_img || 'default-avatar.png'}
 							alt="error"
 						/>
 

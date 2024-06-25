@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { AW_DAO, TOAST_TYPES } from '$lib/constants';
 	import { session, toastStore } from '$lib/stores';
 	import { pushActions } from '$lib/utils/wharfkit/session';
@@ -10,11 +11,10 @@
 	let isOpen = false;
 	let isSubmitting = false;
 	let profile: any = null;
-	let name = '';
-	let description = '';
-	let image = '';
+	let name = 'No Given Name';
+	let description = 'No Description Given';
+	let image = `${$page.url.origin}/default-avatar.png`;
 	let requestedpay: any = 0;
-	let isEditRequestedPay = false;
 
 	export function setModalOpen(bool: boolean, data: any) {
 		profile = data;
@@ -31,7 +31,9 @@
 		dispatch('refresh');
 	}
 
-	onMount(async () => {});
+	onMount(async () => {
+		console.log('page', $page.url.origin);
+	});
 
 	async function submit() {
 		isSubmitting = true;
@@ -86,7 +88,7 @@
 			}
 		];
 
-		if (!profile.is_registered || isEditRequestedPay) {
+		if (!profile.is_registered) {
 			actions.push({
 				account: AW_DAO.CONTRACT_NAME,
 				name: AW_DAO.ACTIONS.NOMINATE_CANDIDATE,
@@ -112,9 +114,9 @@
 	}
 
 	async function close() {
-		name = '';
-		description = '';
-		image = '';
+		name = 'No Given Name';
+		description = 'No Description Given';
+		image = `${$page.url.origin}/default-avatar.png`;
 		isOpen = false;
 	}
 	function autoResize(event: any) {
@@ -151,7 +153,7 @@
 				</span>
 			</div>
 
-			<label for="name" class="text-base font-semibold"> Requested Pay: </label>
+			<!-- <label for="name" class="text-base font-semibold"> Requested Pay: </label>
 			<div class="flex flex-row">
 				<input
 					class="text-black"
@@ -165,7 +167,7 @@
 				>
 					TLM
 				</span>
-			</div>
+			</div> -->
 
 			<label for="image" class="text-base font-semibold"> Image URL: </label>
 			<div class="flex flex-row">
