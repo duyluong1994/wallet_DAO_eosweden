@@ -63,7 +63,7 @@
 	}
 </script>
 
-<h1 class="mb-6 text-center text-2xl font-bold">Tokens</h1>
+<h1 class="mb-6 ml-3 text-start text-2xl font-bold md:ml-0 md:text-center">Tokens</h1>
 <div class="text-default ml-3 flex flex-row text-lg">
 	<p class="">TLM balance:</p>
 	<p class="ml-3 font-medium">{String(tlm_balance)}</p>

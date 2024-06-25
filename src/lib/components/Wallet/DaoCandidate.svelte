@@ -135,7 +135,9 @@
 	}
 </script>
 
-<h1 class="mb-6 text-center text-2xl font-bold">Dao Candidate Profile</h1>
+<h1 class="mb-6 ml-3 text-start text-2xl font-bold md:ml-0 md:text-center">
+	Dao Candidate Profile
+</h1>
 <div class="mt-10 overflow-x-auto">
 	{#if loading}
 		<div class="flex items-center justify-center">

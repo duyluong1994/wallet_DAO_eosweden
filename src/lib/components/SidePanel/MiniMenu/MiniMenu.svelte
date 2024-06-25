@@ -31,14 +31,14 @@
 <div class={className}>
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-	<p class="hidden text-center text-2xl underline underline-offset-4 md:block">Menu</p>
+	<p class="hidden text-center text-2xl underline underline-offset-4 md:block">Wallet Menu</p>
 	<!-- Mobile view: Toggle button -->
 	<button
 		class="absolute right-3 top-1 flex flex-row items-center md:hidden"
 		on:click|stopPropagation={toggleOpen}
 	>
 		<BarsSolid class="pointer-events-none h-5 w-5" />
-		<span class="ml-1">Menu</span>
+		<span class="ml-1">Wallet Menu</span>
 	</button>
 	{#if isOpen}
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
