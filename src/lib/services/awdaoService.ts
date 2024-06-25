@@ -26,7 +26,7 @@ export async function get_staked_by_user(activePlanet: string, user: string) {
 export async function get_candidate_by_candname(planet: any, candidate: string) {
 
     // TODO: comment out this line
-    candidate = "anyo.cabal";
+    // candidate = "anyo.cabal";
 
     const data: any = await getSingleData(AW_DAO.CONTRACT_NAME, planet.scope, AW_DAO.TABLES.CANDIDATES, candidate);
     if (!data) return null;

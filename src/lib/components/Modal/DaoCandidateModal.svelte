@@ -31,9 +31,7 @@
 		dispatch('refresh');
 	}
 
-	onMount(async () => {
-		console.log('page', $page.url.origin);
-	});
+	onMount(async () => {});
 
 	async function submit() {
 		isSubmitting = true;
