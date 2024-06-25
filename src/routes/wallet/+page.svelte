@@ -25,7 +25,7 @@
 		{
 			id: 'dao-candidate',
 			icon: PeopleGroupSolid,
-			label: 'Dao Candidate',
+			label: 'Dao Candidate Profile',
 			logMessage: 'Dao Candidate'
 		}
 	];
