@@ -27,6 +27,7 @@ export async function get_candidate_by_candname(planet: any, candidate: string) 
 
     // TODO: comment out this line
     // candidate = "anyo.cabal";
+    // candidate = "appmo.c.wam";
 
     const data: any = await getSingleData(AW_DAO.CONTRACT_NAME, planet.scope, AW_DAO.TABLES.CANDIDATES, candidate);
     if (!data) return null;
@@ -103,3 +104,4 @@ export async function get_custodians(activePlanet: string) {
 
     return deserializedData;
 }
+

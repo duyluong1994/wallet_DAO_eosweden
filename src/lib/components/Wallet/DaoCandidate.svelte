@@ -36,7 +36,9 @@
 	async function fetchCandidate() {
 		loading = true;
 		let res: any = await Promise.all(
-			AW_PLANETS.map(async (planet) => {
+			AW_PLANETS.filter((planet) => {
+				return planet.scope != 'testa';
+			}).map(async (planet) => {
 				const res = await get_candidate_by_candname(planet, String($session?.actor));
 				return res;
 			})
@@ -50,15 +52,30 @@
 		const resP = await fetchCandidatesProfile();
 
 		profileData = resP;
-		profiles = AW_PLANETS.map((planet) => {
+		profiles = AW_PLANETS.filter((planet) => {
+			return planet.scope != 'testa';
+		}).map((planet) => {
 			let pData = profileData.find((p: any) => p.planet === planet.scope);
 			let cData = candidateData.find((c: any) => c.planet.scope === planet.scope);
+
+			let desc = pData?.cand_desc;
+			// try to convert string to json object
+			if (typeof desc == 'string') {
+				try {
+					desc = JSON.parse(desc.replace(/'([^']*?)'/g, '"$1"')).description;
+				} catch (e) {
+					console.log('error', e);
+				}
+			}
+
 			return {
 				planet,
 				cand_acc: pData?.cand_acc || 'No Profile',
 				cand_name: pData?.cand_name || 'No Given Name',
 				cand_img: pData?.cand_img || 'default-avatar.png',
-				cand_desc: pData?.cand_desc || 'No Description Given',
+				cand_desc:
+					(typeof pData?.cand_desc == 'object' ? pData?.cand_desc?.description : desc) ||
+					'No Given Description',
 				requestedpay: cData?.requestedpay || Asset.from('0.0000 TLM'),
 				is_registered: pData ? true : false
 			};
@@ -70,13 +87,14 @@
 			`${PUBLIC_ALIEN_WALLET_API}/custodians?account=${String($session?.actor)}`
 		);
 		// const res: any = await axios.get(`${PUBLIC_ALIEN_WALLET_API}/custodians?account=anyo.cabal`);
+		// const res: any = await axios.get(`${PUBLIC_ALIEN_WALLET_API}/custodians?account=appmo.c.wam`);
 		if (!res) return [];
 		return res.data;
 	}
 
 	function getProfileImg(planet: string) {
 		const profile = profileData.find((p: any) => p.planet === planet);
-		console.log('profile', profile);
+
 		if (profile) {
 			return profile.cand_img;
 		}
@@ -84,7 +102,7 @@
 	}
 	function getProfileName(planet: string) {
 		const profile = profileData.find((p: any) => p.planet === planet);
-		console.log('profile', profile);
+
 		if (profile) {
 			return profile.cand_name;
 		}
@@ -93,7 +111,7 @@
 
 	function getProfileDesc(planet: string) {
 		const profile = profileData.find((p: any) => p.planet === planet);
-		console.log('profile', profile);
+
 		if (profile) {
 			if (typeof profile.cand_desc == 'object') {
 				return profile.cand_desc?.description || 'No Description Given';
@@ -223,10 +241,11 @@
 					<div class="mt-3 flex flex-col items-start md:mx-5">
 						<div class=" text-sm text-white md:text-base">Description:</div>
 						<div class="text-default text-sm md:text-base">
-							{#each profile.cand_desc.split('\n') as line}
+							{#each profile?.cand_desc.split('\n') as line}
 								{line}
 								<br />
 							{/each}
+							<!-- {profile.cand_desc} -->
 						</div>
 					</div>
 				</div>

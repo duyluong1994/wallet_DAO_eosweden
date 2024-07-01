@@ -12,7 +12,7 @@
 	let isSubmitting = false;
 	let profile: any = null;
 	let name = 'No Given Name';
-	let description = 'No Description Given';
+	let description = 'No Given Description';
 	let image = `${$page.url.origin}/default-avatar.png`;
 	let requestedpay: any = 0;
 
